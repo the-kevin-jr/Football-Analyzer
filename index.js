@@ -6,7 +6,7 @@ mongoose.connect(process.env.DB_HOST, {useNewUrlParser: true});
 
 const app = express();
 
-
+// hello
 app.get('/', function (req, res) {
     res.send("Hello World!");
 });
