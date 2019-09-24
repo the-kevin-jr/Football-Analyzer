@@ -13,5 +13,6 @@ exports.insertSeasonPlayer = async function(seasonID, teamID, playerID) {
         SeasonID: seasonID,
         TeamID: teamID,
         PlayerID: playerID
-    })
+    });
+    await newPlayer.save();
 }

@@ -1,7 +1,8 @@
 const mongoose = require('mongoose')
 
 var team = new mongoose.Schema({
-    teamID: {type: Number, unique: true, required: true, index: true},
+    teamID: {type: Number, required: true, index: true},
+    year: {type: String, required: true},
     name: {type: String, required: true},
     shortName: String,
     abbr: String,
@@ -14,6 +15,7 @@ var team = new mongoose.Schema({
 
 const Team = mongoose.model("Team", team);
 
+exports.Team = Team;
 exports.insertTeam = async function(teamID, name, shortName, abbr, teamType, groundIDs) {
     const newTeam = new Team({
         teamID: teamID,
