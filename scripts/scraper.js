@@ -9,6 +9,8 @@ COMPETITIONS_URL =
 
 TEAMS_URL = "https://footballapi.pulselive.com/football/compseasons/274/teams";
 
+let range = n => Array.from(Array(n).keys())
+
 async function main() {
   await db.connect(process.env.DB_HOST);
 
@@ -39,7 +41,8 @@ async function main() {
   await Promise.all([
     db.league.League.deleteMany({}).exec(),
     db.season.Season.deleteMany({}).exec(),
-    db.team.Team.deleteMany({}).exec()
+    db.team.Team.deleteMany({}).exec(),
+    db.player.Player.deleteMany({}).exec()
   ]);
 
   //Insert leagues and seasons
@@ -98,10 +101,38 @@ async function main() {
     }
   }
 
+  teams = Object.values(teams);
+  players = {};
+
+  for (const season of scrapeSeasons) {
+    console.log(`Scraping players for season ID ${season}`);
+    (await Promise.all(range(30).map((page) => {
+      const url = `https://footballapi.pulselive.com/football/players?pageSize=30&compSeasons=${season}&altIds=true&page=${page}&type=player&compSeasonId=${season}`
+        return rp({
+          uri: url,
+          json: true
+        });
+    }))).map((page) => {
+      for (const player of page.content) {
+        players[player.id] = {
+          playerID: player.id,
+          name: player.name.display,
+          position: player.info.positionInfo,
+          shirtNum: player.info.shirtNum,
+          country: player.nationalTeam.country,
+          birthDate: player.birth.date ? player.birth.date.label : "None",
+          teamID: player.currentTeam ? player.currentTeam.id : "None"
+        };
+      }
+    });
+  }
+
+  players = Object.values(players);
   await Promise.all([
     db.league.League.insertMany(leagueDocs),
     db.season.Season.insertMany(seasons),
-    db.team.Team.insertMany(Object.values(teams))
+    db.team.Team.insertMany(teams),
+    db.player.Player.insertMany(players)
   ]);
   await db.disconnect();
 }
