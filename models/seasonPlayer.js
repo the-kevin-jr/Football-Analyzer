@@ -1,9 +1,9 @@
 const mongoose = require('mongoose');
 
 var seasonPlayer = new mongoose.Schema({
-    SeasonID: {type: mongoose.Schema.Types.ObjectId, ref: "Season", required: true},
-    TeamID: {type: mongoose.Schema.Types.ObjectId, ref: "Team", required: true},
-    PlayerID: {type: mongoose.Schema.Types.ObjectId, ref: "Player", required: true}
+    SeasonID: {type: String},
+    playerID: {type: String},
+    teamID: { type: String }
 });
 
 const SeasonPlayer = mongoose.model("SeasonPlayer", seasonPlayer);

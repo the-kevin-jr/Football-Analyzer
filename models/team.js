@@ -2,15 +2,16 @@ const mongoose = require('mongoose')
 
 var team = new mongoose.Schema({
     teamID: {type: Number, required: true, index: true},
-    year: {type: String, required: true},
+    year: {type: String},
     name: {type: String, required: true},
     shortName: String,
     abbr: String,
     teamType: String,
-    groundID: [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Ground'
-    }]
+    seasonID: [{type: String}],
+    // groundID: [{
+    //     type: mongoose.Schema.Types.ObjectId,
+    //     ref: 'Ground'
+    // }]
 })
 
 const Team = mongoose.model("Team", team);

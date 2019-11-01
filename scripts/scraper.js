@@ -7,6 +7,8 @@ const db = require("../models");
 COMPETITIONS_URL =
   "https://footballapi.pulselive.com/football/competitions?page=0&pageSize=100&detail=2";
 
+TEAMS_URL = "https://footballapi.pulselive.com/football/compseasons/274/teams";
+
 async function main() {
   await db.connect(process.env.DB_HOST);
 
@@ -35,10 +37,10 @@ async function main() {
 
   //Clear database
   await Promise.all([
-      db.league.League.deleteMany({}).exec(),
-      db.season.Season.deleteMany({}).exec(),
-      db.team.Team.deleteMany({}).exec()
-    ]);
+    db.league.League.deleteMany({}).exec(),
+    db.season.Season.deleteMany({}).exec(),
+    db.team.Team.deleteMany({}).exec()
+  ]);
 
   //Insert leagues and seasons
   const seasons = [];
@@ -64,11 +66,42 @@ async function main() {
     };
   });
 
-  seasons.map(function (team) {})
+  scrapeSeasons = [274, 288];
+  seasonTeams = await Promise.all(
+    scrapeSeasons.map(season => {
+      const url = `https://footballapi.pulselive.com/football/compseasons/${season}/teams`;
+      return rp({
+        uri: url,
+        json: true
+      });
+    })
+  );
+
+  teams = {};
+  
+  for (let i = 0; i<scrapeSeasons.length; i++) {
+    const teamList = seasonTeams[i];
+    for (const team of teamList) {
+      const newTeam = {
+        teamID: team.id,
+        name: team.name,
+        shortName: team.shortName,
+        teamType: team.teamType,
+        seasonID: [scrapeSeasons[i]]
+      }
+
+      if (teams[team.id]) {
+        teams[team.id].seasonID.push(scrapeSeasons[i])
+      } else {
+        teams[team.id] = newTeam;
+      }
+    }
+  }
 
   await Promise.all([
     db.league.League.insertMany(leagueDocs),
-    db.season.Season.insertMany(seasons)
+    db.season.Season.insertMany(seasons),
+    db.team.Team.insertMany(Object.values(teams))
   ]);
   await db.disconnect();
 }

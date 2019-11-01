@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const season = new mongoose.Schema({
     seasonID: {type: Number, required: true, index: true, unique: true},
     name: {type: String, required: true},
-    year: {type: String, required: true},
+    year: {type: String},
     teams: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: "Team"
