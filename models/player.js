@@ -5,12 +5,15 @@ var player = new mongoose.Schema({
     name: {type: String, required: true},
     position: String,
     shirtNum: Number,
+    currentTeam: Number,
     nationalTeamCountry: String,
     country: String,
-    birthDate: Date
+    birthDate: String,
+    currentTeam: String
 });
 
 const Player =  mongoose.model("Player", player);
+exports.Player = Player;
 
 exports.insertPlayer = async function(playerID, name, position, shirtNum, nationalTeamCountry, country, birthDate) {
     const newPlayer = new Player({

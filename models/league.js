@@ -5,7 +5,6 @@ const league = new mongoose.Schema({
   abbr: { type: String },
   name: { type: String, required: true },
   level: { type: String },
-  seasons: [{ type: mongoose.Schema.Types.ObjectId, ref: "Season" }]
 });
 
 const League = mongoose.model("League", league);
