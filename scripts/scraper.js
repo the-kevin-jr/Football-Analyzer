@@ -54,6 +54,7 @@ async function main() {
 
   // scrapeSeasons = [274, 210, 288, 214, 286, 213, 316,209];
   scrapeSeasons = [210, 214, 213, 209, 274, 288, 286, 316];
+  scrapeSeasons.sort(); // Latest seasons write last
   seasonTeams = await Promise.all(
     scrapeSeasons.map(season => {
       console.log(`Scraping teams for seasonID ${season}`);
