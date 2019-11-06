@@ -37,8 +37,8 @@
             {% for goal in goals %}
             <tr>
                 <td>{{goal.time/60}}</td>
-                <td>{{goal.playerID}}</td>
-                <td>{{goal.assistID}}</td>
+                <td><a href="/players/{{goal.playerID}}">{{goal.playerID}}</a></td>
+                <td><a href="/players/{{goal.assistID}}">{{goal.assistID}}</a></td>
                 <td>{{goal.goalType}}</td>
             </tr>
             {% endfor %}
