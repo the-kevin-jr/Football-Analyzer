@@ -18,14 +18,24 @@
 
         <div class="Details">
             <ul>
-                <li>Team Name: Barcelona</li>
-                <li>Team Abbr: BAR</li>
-                <li>Stadium: Camp Nou</li>
+                <li>Season Name: {{season.name}}</li>
+                <li>SeasonID: {{season.seasonID}}</li>
+                <li>League:<a href="/leagues/{{league.leagueID}}"> {{league.name}}</a></li>
             </ul>
         </div>
-
+        <h2>Teams: </h2>
         <table class="table">
+                <tr>
+                    <th>TeamID</th>
+                    <th>TeamName</th>
+                </tr>
+            {% for team in teams %}
             <tr>
+                <td><a href='/teams/{{team.teamID}}'>{{team.teamID}}</a></td>
+                <td>{{team.name}}</td>
+            </tr>
+            {% endfor %}
+            <!-- <tr>
                 <th>Player</th>
                 <th>Number</th>
                 <th>Nationality</th>
@@ -54,7 +64,7 @@
                 <td><a href='#'>Juventus</a></td>
                 <td>JUV</td>
                 <td>Some League</td>
-            </tr>
+            </tr> -->
         </table>
     </body>
 </html>
