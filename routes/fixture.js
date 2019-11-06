@@ -3,6 +3,8 @@ const mongoose = require("mongoose");
 const router = express.Router();
 
 const Fixture = require("../models/fixture").Fixture;
+const Team = require("../models/team").Team;
+const Goal = require("../models/goal").Goal;
 
 router.get("/", async function (req, res) {
     const fixtures = await Fixture.aggregate([
@@ -59,6 +61,16 @@ router.get("/", async function (req, res) {
         data: fixtures
     };
     res.render('listModel', templateVals);
+});
+
+
+router.get("/:id", async (req, res) => {
+    console.log(req.params.id);
+    const fixture = await Fixture.findOne({fixtureID: req.params.id}).exec();
+    const team1 = await Team.findOne({teamID: fixture.team1});
+    const team2 = await Team.findOne({teamID: fixture.team2});
+    const goals = await Goal.find({fixtureID: fixture.fixtureID});
+    res.render('fixture', {fixture, team1, team2, goals});
 });
 
 exports.router = router;
