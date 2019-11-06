@@ -69,7 +69,51 @@ router.get("/:id", async (req, res) => {
     const fixture = await Fixture.findOne({fixtureID: req.params.id}).exec();
     const team1 = await Team.findOne({teamID: fixture.team1});
     const team2 = await Team.findOne({teamID: fixture.team2});
-    const goals = await Goal.find({fixtureID: fixture.fixtureID});
+
+    const goals = await Goal.aggregate([
+        {
+            $match: {
+                fixtureID: fixture.fixtureID
+            }
+        },
+        {
+            $lookup:
+            {
+                from: 'players',
+                localField: 'playerID',
+                foreignField: 'playerID',
+                as: 'playerDetails'
+            },
+        },{
+            $lookup:
+            {
+                from: 'players',
+                localField: 'assistID',
+                foreignField: 'playerID',
+                as: 'assistDetails'
+            },
+        },{
+            $project:
+            {
+                "time": 1,
+                "playerID": 1,
+                "assistID":1,
+                "goalType": 1,
+                "playerDetails": {"$arrayElemAt":["$playerDetails", 0]},
+                "assistDetails": {"$arrayElemAt":["$assistDetails", 0]}
+            },
+        },{
+            $project:
+            {
+                "time": 1,
+                "playerID": 1,
+                "assistID":1,
+                "goalType": 1,
+                "playerName": "$playerDetails.name",
+                "assistName": "$assistDetails.name"
+            }
+        }
+    ]).exec();
     res.render('fixture', {fixture, team1, team2, goals});
 });
 

@@ -29,16 +29,20 @@
         <h2>Goals:</h2>
         <table class="table">
             <tr>
-                <th>Time</th>
-                <th>Scorer</th>
-                <th>Assist</th>
+                <th>Time (Minutes)</th>
+                <th>ScorerID</th>
+                <th>Scorer Name</th>
+                <th>Assister ID</th>
+                <th>Assist Name</th>
                 <th>Type</th>
             </tr>
             {% for goal in goals %}
             <tr>
                 <td>{{goal.time/60}}</td>
                 <td><a href="/players/{{goal.playerID}}">{{goal.playerID}}</a></td>
+                <td>{{goal.playerName}}</td>
                 <td><a href="/players/{{goal.assistID}}">{{goal.assistID}}</a></td>
+                <td>{{goal.assistName}}</td>
                 <td>{{goal.goalType}}</td>
             </tr>
             {% endfor %}
