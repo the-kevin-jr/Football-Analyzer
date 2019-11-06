@@ -16,5 +16,7 @@ router.use("/players", playerRouter);
 router.use("/seasons", seasonRouter);
 router.use("/teams", teamRouter);
 router.use("/goals", goalRouter);
-
+router.get('/', (req, res) => {
+    res.redirect('/leagues');
+})
 exports.router = router;
