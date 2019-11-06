@@ -18,4 +18,11 @@ router.get("/", async function (req, res) {
     res.render('listModel', templateVals);
 });
 
+
+router.get("/:id", async (req, res) => {
+    console.log(req.params.id);
+    const players = await Player.findOne({playerID: req.params.id}).exec();
+    res.render('player', {players});
+});
+
 exports.router = router;

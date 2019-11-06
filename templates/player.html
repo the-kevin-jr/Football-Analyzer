@@ -4,7 +4,7 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
-        <title>Teams</title>
+        <title>Player</title>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <link rel="stylesheet" type="text/css" href="/static/css/details.css">
         <link rel="stylesheet" href="/static/css/teams.css">
@@ -17,27 +17,14 @@
         </div>
 
         
+        <h3 class="heading">Player Name: {{players.name}}</h3>
 
         <div class="details">
             <ol>
-                <li>Team Name: {{team.name}}</li>
-                <li>TeamID: {{team.teamID}}</li>
-                <li>Abbreviation: {{team.shortName}}</a></li>
+                <li>PlayerID: {{players.playerID}}</li>
+                <li>position: {{players.position}}</a></li>
+                <li>Shirt Number: {{players.shirtNum}}</li>
+                <li>Country: {{players.country}}</li>
+                <li>Birthday: {{players.birthDate}}</li>
             </ol>
         </div>
-        
-        <table class="table">
-            <tr>
-                <th>PlayerID</th>
-                <th>PlayerName</th>
-            </tr>
-            {% for player in players %}
-            <tr>
-                <td><a href='/players/{{player.playerID}}'>{{player.playerID}}</a></td>
-                <td>{{player.name}}</td>
-            </tr>
-            {% endfor %}
-        </table>
-    </body>
-
-</html>
