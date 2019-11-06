@@ -8,8 +8,7 @@ var player = new mongoose.Schema({
     currentTeam: Number,
     nationalTeamCountry: String,
     country: String,
-    birthDate: String,
-    currentTeam: String
+    birthDate: String
 });
 
 const Player =  mongoose.model("Player", player);

@@ -4,7 +4,7 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
-        <title>Football - seasons</title>
+        <title>Football</title>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <link rel="stylesheet" type="text/css" href="/static/css/details.css">
         <link rel="stylesheet" href="/static/css/teams.css">
@@ -18,24 +18,14 @@
 
         <div class="Details">
             <ul>
-                <li>Season Name: {{season.name}}</li>
-                <li>SeasonID: {{season.seasonID}}</li>
-                <li>League:<a href="/leagues/{{league.leagueID}}"> {{league.name}}</a></li>
+                <li>Team Name: Barcelona</li>
+                <li>Team Abbr: BAR</li>
+                <li>Stadium: Camp Nou</li>
             </ul>
         </div>
-        <h2>Teams: </h2>
+
         <table class="table">
-                <tr>
-                    <th>TeamID</th>
-                    <th>TeamName</th>
-                </tr>
-            {% for team in teams %}
             <tr>
-                <td><a href='/teams/{{team.teamID}}'>{{team.teamID}}</a></td>
-                <td>{{team.name}}</td>
-            </tr>
-            {% endfor %}
-            <!-- <tr>
                 <th>Player</th>
                 <th>Number</th>
                 <th>Nationality</th>
@@ -64,7 +54,7 @@
                 <td><a href='#'>Juventus</a></td>
                 <td>JUV</td>
                 <td>Some League</td>
-            </tr> -->
+            </tr>
         </table>
     </body>
 </html>
