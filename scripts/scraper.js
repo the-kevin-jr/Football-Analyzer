@@ -16,7 +16,10 @@ async function main() {
   console.log("Scraping Leagues");
   const comps = await rp({
     uri: COMPETITIONS_URL,
-    json: true
+    json: true,
+    headers: {
+        'Origin': 'https://www.premierleague.com'
+    }
   });
 
   //Clear database
@@ -61,7 +64,10 @@ async function main() {
       const url = `https://footballapi.pulselive.com/football/compseasons/${season}/teams`;
       return rp({
         uri: url,
-        json: true
+        json: true,
+    headers: {
+        'Origin': 'https://www.premierleague.com'
+    }
       });
     })
   );
@@ -96,7 +102,10 @@ async function main() {
       const url = `https://footballapi.pulselive.com/football/players?pageSize=30&compSeasons=${season}&altIds=true&page=${page}&type=player&compSeasonId=${season}`
         return rp({
           uri: url,
-          json: true
+          json: true,
+    headers: {
+        'Origin': 'https://www.premierleague.com'
+    }
         });
     }))).map((page) => {
       for (const player of page.content) {
@@ -131,7 +140,10 @@ async function main() {
       const url = `https://footballapi.pulselive.com/football/fixtures?compSeasons=${season}&page=${page}&pageSize=40&sort=desc&statuses=C&altIds=true`
         return rp({
           uri: url,
-          json: true
+          json: true,
+    headers: {
+        'Origin': 'https://www.premierleague.com'
+    }
         });
     }))).map((page) => {
       for (const match of page.content) {
